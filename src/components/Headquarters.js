@@ -4,11 +4,12 @@ import Details from "./Details";
 import "../stylesheets/Headquarters.css";
 import ColdStorage from "./ColdStorage";
 
-function Headquarters({ hosts, setHosts, areas, setHostsInArea }) {
+function Headquarters({ hosts, setHosts, areas, onChangeHostsInArea }) {
 
   const [ selectedHost, setSelectedHost ] = useState({})
 
   function handleHostSelect(pickedHost) {
+    updatedBackEnd(pickedHost)
     const updatedHosts = hosts.map(host => {
       if(host.id === pickedHost.id ) {
         const newHost = {...host, authorized: true}
@@ -21,6 +22,17 @@ function Headquarters({ hosts, setHosts, areas, setHostsInArea }) {
     setHosts(updatedHosts)    
   }
 
+  function updatedBackEnd(host) {
+    fetch(`http://localhost:3001/hosts/${host.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({authorized: true})
+    }).then(res => res.json())
+    .then(updatedHost => onChangeHostsInArea(updatedHost))
+  }
+
   return (
     <Grid celled="internally">
       <Grid.Column width={8}>
@@ -30,7 +42,7 @@ function Headquarters({ hosts, setHosts, areas, setHostsInArea }) {
         <Details 
           selectedHost={selectedHost} 
           areas={areas} 
-          setHostsInArea={setHostsInArea}
+          onChangeHostsInArea={onChangeHostsInArea}
         />
       </Grid.Column>
       <Grid.Column width={3}>

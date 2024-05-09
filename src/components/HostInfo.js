@@ -10,7 +10,7 @@ import {
 } from "semantic-ui-react";
 import "../stylesheets/HostInfo.css";
 
-function HostInfo({ selectedHost, areas, setHostsInArea }) {
+function HostInfo({ selectedHost, areas, onChangeHostsInArea }) {
   // This state is just to show how the dropdown component works.
   // Options have to be formatted in this way (array of objects with keys of: key, text, value)
   // Value has to match the value in the object to render the right text.
@@ -38,8 +38,7 @@ function HostInfo({ selectedHost, areas, setHostsInArea }) {
       body: JSON.stringify({area: value, active: true})
     }).then(res => res.json())
     .then(updatedHost => {
-      console.log("Updated host:", updatedHost)
-      setHostsInArea(updatedHost)
+      onChangeHostsInArea(updatedHost)
     })
     setValue(value)
   }

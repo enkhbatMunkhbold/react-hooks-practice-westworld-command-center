@@ -6,12 +6,9 @@ import Headquarters from "./Headquarters";
 
 function App() {
 
-  // const [ hosts, setHosts ] = useState([])
+  const [ hosts, setHosts ] = useState([])
   const [ areas, setAreas ] = useState([])
   
-  const [ hostsInArea, setHostsInArea ] = useState([])
-  const [ hostsInCS, setHostsInCS ] = useState([])
-
   useEffect(() => {
     fetch('http://localhost:3001/areas')
     .then(res => res.json())
@@ -21,23 +18,22 @@ function App() {
   useEffect(() => {
     fetch('http://localhost:3001/hosts')
     .then(res => res.json())
-    .then(hosts => {
-      const csHosts = []
-      const areaHosts = []
-      hosts.forEach(host => host.active ? areaHosts.push(host) : csHosts.push(host))
-      setHostsInCS(csHosts)
-      setHostsInArea(areaHosts)
-    })
+    .then(data => setHosts(data))
   }, [])
-  // console.log(hostsInArea)
+
+  function handleChangeHostsInArea(changeHost) {
+    const updatedHosts = hosts.map(host => host.id === changeHost.id ? changeHost : host)
+    setHosts(updatedHosts)
+  }
+
   return (
     <Segment id="app">
-      <WestworldMap areas={areas} hosts={hostsInArea}/>
+      <WestworldMap areas={areas} hosts={hosts}/>
       <Headquarters 
-        hosts={hostsInCS} 
-        setHosts={setHostsInCS} 
+        hosts={hosts} 
+        setHosts={setHosts}
         areas={areas}
-        setHostsInArea={setHostsInArea}
+        onChangeHostsInArea={handleChangeHostsInArea}
       />
     </Segment>
   );
