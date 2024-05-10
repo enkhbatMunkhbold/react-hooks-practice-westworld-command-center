@@ -2,10 +2,10 @@ import React from "react";
 import "../stylesheets/Area.css";
 import Host from "./Host";
 
-function Area({ area, hosts }) {
+function Area({ area, hosts, onHostSelect }) {
 
   const areaName = area.name.split('_').map(str => str[0].toUpperCase() + str.slice(1).toLowerCase()).join(' ')
-  const renderHosts = hosts.map(host => <Host key={host.id} host={host}/>)
+  const renderHosts = hosts.map(host => <Host key={host.id} host={host} onHostSelect={onHostSelect}/>)
 
   return (
     <div className="area" id={area.name}  >

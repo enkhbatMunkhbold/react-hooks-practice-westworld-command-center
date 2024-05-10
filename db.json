@@ -38,7 +38,7 @@
       "imageUrl": "https://vignette.wikia.nocookie.net/westworld/images/8/82/Akecheta_Kiksuya.jpg/revision/latest?cb=20180607183222",
       "gender": "Male",
       "area": "lowlands",
-      "authorized": false
+      "authorized": true
     },
     {
       "id": 5,
@@ -48,7 +48,7 @@
       "imageUrl": "https://vignette.wikia.nocookie.net/westworld/images/a/a2/Peter_Abernathy_%281%29.jpg/revision/latest?cb=20161024014816",
       "gender": "Male",
       "area": "badlands",
-      "authorized": false
+      "authorized": true
     },
     {
       "id": 6,
@@ -58,7 +58,7 @@
       "imageUrl": "https://vignette.wikia.nocookie.net/westworld/images/b/b2/Angela_Reunion.jpg/revision/latest/scale-to-width-down/310?cb=20180509174920",
       "gender": "Female",
       "area": "badlands",
-      "authorized": false
+      "authorized": true
     },
     {
       "id": 7,
@@ -108,7 +108,7 @@
       "imageUrl": "https://vignette.wikia.nocookie.net/westworld/images/7/78/Armistice_Akane_No_Mai.jpg/revision/latest/scale-to-width-down/310?cb=20180517164314",
       "gender": "Female",
       "area": "lowlands",
-      "authorized": false
+      "authorized": true
     },
     {
       "id": 12,
