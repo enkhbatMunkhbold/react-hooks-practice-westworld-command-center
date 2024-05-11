@@ -20,12 +20,9 @@ function App() {
     fetch('http://localhost:3001/hosts')
     .then(res => res.json())
     .then(data => setHosts(data))
-  }, [])
-
-  
+  }, [])  
 
   function handleHostSelect(pickedHost) {
-    updatedBackEnd(pickedHost)
     const updatedHosts = hosts.map(host => {
       if(host.id === pickedHost.id ) {
         const newHost = {...host, authorized: true}
@@ -38,20 +35,9 @@ function App() {
     setHosts(updatedHosts)    
   }
 
-  function handleChangeHostsInArea(changeHost) {
-    const updatedHosts = hosts.map(host => host.id === changeHost.id ? changeHost : host)
+  function onChangeHostsInArea(pickedHost) {
+    const updatedHosts = hosts.map(host => host.id === pickedHost.id ? pickedHost : host)
     setHosts(updatedHosts)
-  }
-
-  function updatedBackEnd(host) {
-    fetch(`http://localhost:3001/hosts/${host.id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({authorized: true})
-    }).then(res => res.json())
-    .then(updatedHost => handleChangeHostsInArea(updatedHost))
   }
 
   return (
@@ -62,6 +48,7 @@ function App() {
         areas={areas}
         selectedHost={selectedHost}
         onHostSelect={handleHostSelect}
+        onChangeHostsInArea={onChangeHostsInArea}
       />
     </Segment>
   );

@@ -2,11 +2,10 @@ import React from "react";
 import { Card } from "semantic-ui-react";
 import "../stylesheets/Host.css";
 
-function Host({ host, onHostSelect }) {
+function Host({ host, onHostSelect, selectedHost }) {
   /* NOTE: The className "host selected" renders a different style than simply "host". */
 
   function handleClick() {  
-    // debugger 
     onHostSelect(host)
   }
 

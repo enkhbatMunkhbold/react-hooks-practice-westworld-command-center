@@ -22,11 +22,11 @@ function HostInfo({ selectedHost, areas, onChangeHostsInArea }) {
  
   // IMPORTANT: But whether it should be stateful or not is entirely up to you. Change this component however you like.
   const [options] = useState(areaProperties);
-
   const [value, setValue] = useState(selectedHost.area);
+  const [isActive, setIsActive] = useState(selectedHost.active)
 
   function handleOptionChange(e, { value }) {
-    console.log(e.target)
+  
     // the 'value' attribute is given via Semantic's Dropdown component.
     // Put a debugger or console.log in here and see what the "value" variable is when you pass in different options.
     // See the Semantic docs for more info: https://react.semantic-ui.com/modules/dropdown/#usage-controlled
@@ -39,12 +39,23 @@ function HostInfo({ selectedHost, areas, onChangeHostsInArea }) {
     }).then(res => res.json())
     .then(updatedHost => {
       onChangeHostsInArea(updatedHost)
+      setIsActive(updatedHost.active)
     })
     setValue(value)
   }
 
-  function handleRadioChange() {
-    console.log("The radio button fired");
+  function handleRadioChange(e) {
+    console.log('Radio Change:', e.target.name)
+    fetch(`http://localhost:3001/hosts/${selectedHost.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({active: !isActive})
+    }).then(res => res.json())
+    .then(updatedHost => {
+      setIsActive(updatedHost.active)
+    })
   }
 
   return (
@@ -70,7 +81,7 @@ function HostInfo({ selectedHost, areas, onChangeHostsInArea }) {
               <Radio
                 onChange={handleRadioChange}
                 label={"Active"}
-                checked={true}
+                checked={isActive}
                 slider
               />
             </Card.Meta>

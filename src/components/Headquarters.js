@@ -9,7 +9,7 @@ function Headquarters({ hosts, areas, selectedHost, onHostSelect, onChangeHostsI
   return (
     <Grid celled="internally">
       <Grid.Column width={8}>
-        <ColdStorage hosts={hosts} onHostSelect={onHostSelect}/>
+        <ColdStorage hosts={hosts} onHostSelect={onHostSelect} selectedHost={selectedHost}/>
       </Grid.Column>
       <Grid.Column width={5}>
         <Details 
