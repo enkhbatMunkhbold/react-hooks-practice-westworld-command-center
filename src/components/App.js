@@ -6,9 +6,19 @@ import Headquarters from "./Headquarters";
 
 function App() {
 
+  const initialValues = {
+    firstName: '',
+    lastName: '',
+    area: '',
+    gender: '',
+    imageUrl: '',
+    active: false,
+    authorized: false
+  }
+  
   const [ hosts, setHosts ] = useState([])
   const [ areas, setAreas ] = useState([])
-  const [ selectedHost, setSelectedHost ] = useState({})
+  const [ selectedHost, setSelectedHost ] = useState(initialValues)
   
   useEffect(() => {
     fetch('http://localhost:3001/areas')
@@ -23,19 +33,11 @@ function App() {
   }, [])  
 
   function handleHostSelect(pickedHost) {
-    const updatedHosts = hosts.map(host => {
-      if(host.id === pickedHost.id ) {
-        const newHost = {...host, authorized: true}
-        setSelectedHost(newHost)
-        return newHost
-      } else {
-        return {...host, authorized: false}
-      }
-    })
-    setHosts(updatedHosts)    
+    setSelectedHost(pickedHost)
+    hosts.forEach(host => host.id === pickedHost.id ? host.authorized = true : host.authorized = false)
   }
 
-  function onChangeHostsInArea(pickedHost) {
+  function handleUpdateHost(pickedHost) {
     const updatedHosts = hosts.map(host => host.id === pickedHost.id ? pickedHost : host)
     setHosts(updatedHosts)
   }
@@ -48,7 +50,7 @@ function App() {
         areas={areas}
         selectedHost={selectedHost}
         onHostSelect={handleHostSelect}
-        onChangeHostsInArea={onChangeHostsInArea}
+        onUpdateHost={handleUpdateHost}
       />
     </Segment>
   );
