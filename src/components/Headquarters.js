@@ -3,13 +3,14 @@ import { Grid } from "semantic-ui-react";
 import Details from "./Details";
 import "../stylesheets/Headquarters.css";
 import ColdStorage from "./ColdStorage";
+import LogPanel from "./LogPanel";
 
-function Headquarters({ hosts, areas, selectedHost, onHostSelect, onUpdateHost }) {
+function Headquarters({ nonActiveHosts, areas, selectedHost, onHostSelect, onUpdateHost, onControlAll }) {
 
   return (
     <Grid celled="internally">
       <Grid.Column width={8}>
-        <ColdStorage hosts={hosts} onHostSelect={onHostSelect}/>
+        <ColdStorage nonActiveHosts={nonActiveHosts} onHostSelect={onHostSelect}/>
       </Grid.Column>
       <Grid.Column width={5}>
         <Details 
@@ -19,7 +20,7 @@ function Headquarters({ hosts, areas, selectedHost, onHostSelect, onUpdateHost }
         />
       </Grid.Column>
       <Grid.Column width={3}>
-        {/* and here. Take visual cues from the screenshot/video in the Readme. */}
+        <LogPanel onControlAll={onControlAll}/>
       </Grid.Column>
     </Grid>
   );
