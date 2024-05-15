@@ -20,11 +20,6 @@ function App() {
   const [ areas, setAreas ] = useState([])
   const [ selectedHost, setSelectedHost ] = useState(initialValues)
 
-  const activeHosts = []
-  const nonActiveHosts = []
-
-  hosts.forEach(host => host.active ? activeHosts.push(host) : nonActiveHosts.push(host))
-  
   useEffect(() => {
     fetch('http://localhost:3001/areas')
     .then(res => res.json())
@@ -48,46 +43,28 @@ function App() {
   }
 
   function handleControlAll(text) {
-    const alreadyActiveHosts = hosts.filter(host => host.active)
-    if(alreadyActiveHosts.length > 0) {
-
+    function updating(boolVal) {
+      const updatedPeople = hosts.map(host => host.active === boolVal ? host : {...host, active: !host.active})
+      setHosts(updatedPeople)
     }
-    const updatedPeople = []
-    if(text === 'ACTIVATE ALL') {      
-      hosts.forEach(host => {
-        updateHostActiveInBackEnd(host, true, updatedPeople)
-      })
+
+    if(text === 'ACTIVATE ALL') {
+      updating(true)
     } else {
-      hosts.forEach(host => {
-        updateHostActiveInBackEnd(host, false, updatedPeople)
-      })
+      updating(false)
     }
-    console.log('updatedPeople:', updatedPeople)
-    setHosts(updatedPeople)
-  }
-
-  function updateHostActiveInBackEnd(currentHost, booleanValue, people) {
-    fetch(`http://localhost:3001/hosts/${currentHost.id}`, {
-      method: 'PATCH',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({active: booleanValue})
-    }).then(res => res.json())
-    .then(updatedHost => people.push(updatedHost))
-    return people
   }
 
   return (
     <Segment id="app">
-      <WestworldMap areas={areas} activeHosts={activeHosts} onHostSelect={handleHostSelect}/>
+      <WestworldMap areas={areas} hosts={hosts} onHostSelect={handleHostSelect}/>
       <Headquarters 
-        nonActiveHosts={nonActiveHosts} 
         areas={areas}
         selectedHost={selectedHost}
         onHostSelect={handleHostSelect}
         onUpdateHost={handleUpdateHost}
         onControlAll={handleControlAll}
+        hosts={hosts}
       />
     </Segment>
   );

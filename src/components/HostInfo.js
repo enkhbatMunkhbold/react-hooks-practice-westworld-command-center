@@ -29,7 +29,7 @@ function HostInfo({ selectedHost, areas, onUpdateHost }) {
   useEffect(() => {
     setIsActive(active)
     setPickArea(area)
-  }, [selectedHost])
+  }, [active, area])
 
   function handleOptionChange(e, { value }) {
    
@@ -85,7 +85,7 @@ function HostInfo({ selectedHost, areas, onUpdateHost }) {
               {/* Checked takes a boolean and determines what position the switch is in. Should it always be true? */}
               <Radio
                 onChange={handleRadioChange}
-                label={"Active"}
+                label={isActive ? "Active" : 'Decommissioned'}
                 checked={isActive}
                 slider
               />
